@@ -2,16 +2,27 @@
 
 
 import React, { useContext } from "react";
-import { AppBar, Toolbar, Typography, Button, Container, Box, IconButton, Drawer, List, ListItem, ListItemText } from "@mui/material";
+import { AppBar, Toolbar, Typography, Button, Container, Box, IconButton, Drawer, List, ListItem, ListItemText, styled, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ourcontext } from "./App";
+
+import myImage from "./assets/Logo.png"
  export const Header = () => {
-  let {user,setuser}=useContext(ourcontext)
+  const theme = useTheme(); // Access theme inside component
+  let {user,setuser,admin}=useContext(ourcontext)
 let navigate=useNavigate()
-  
+    let   Typologo =styled(Typography)(({theme})=>({
+    
+      fontFamily:theme.palette.othercolor.fontfamiily
+      
+      
+        }))
+
+     
+        
     const [mobileOpen, setMobileOpen] = useState(false);
   
     const handleDrawerToggle = () => {
@@ -20,6 +31,13 @@ let navigate=useNavigate()
   
     const drawer = (
       <Box sx={{ width: 250 }} role="presentation" onClick={handleDrawerToggle}>
+            {/* <IconButton>
+        <img src={myImage} alt="My Icon" />
+    </IconButton> */}
+
+<IconButton   >
+        <img src={myImage}  style={{width:"auto",height:100}}  alt="My Icon" />
+    </IconButton>
         <List>
           {["Home", "About", "Contact", "BookTicket","Signin"].map((text) => (
         <>
@@ -66,7 +84,7 @@ text=="Signin" ?   <Link to={text}>
      
      
      
-     :  
+     :  ""
        
   //    <ListItem button key={text} >
   //    <ListItemText primary={text} />
@@ -74,10 +92,7 @@ text=="Signin" ?   <Link to={text}>
 
 
      
-     <Button color="inherit"   variant="contained"    onClick={()=>{
-      localStorage.removeItem("auth")
-      setuser(false)
-     }}  >Logout</Button>
+    
       
       
       // <Link to={text}>
@@ -100,14 +115,41 @@ text=="Signin" ?   <Link to={text}>
         
         </>
           ))}
+             {admin  && user &&
+        <Link to={"/addpass"}>
+             
+             <ListItem button key={"Add Student"}>
+              <ListItemText primary={"Add Student"} />
+            </ListItem>
+          </Link>
+       }
+
+{admin  &&
+        <Link to={"/showconsession"}>
+             
+             <ListItem button key={"Show Consession Granted"}>
+              <ListItemText primary={"Show Consession Granted"} />
+            </ListItem>
+          </Link>
+       }
+
+
+       {user&&  <Button color="inherit"   variant="contained"    onClick={()=>{
+      localStorage.removeItem("auth")
+      setuser(false)
+     }}  >Logout</Button>}
         </List>
       </Box>
     );
   
     return (
       <>
-        <AppBar position="static" sx={{ background: "#1e88e5" }}>
+        <AppBar position="static" mt={5} sx={{ mt:2,background: "#1e88e5",width:{sm:"100%",md:"98%"} ,display:"block",marginLeft:"auto",marginRight:"auto",borderRadius:{sm:"0",md:"8px"} }}    >
+      
           <Toolbar>
+          <IconButton   sx={{display:{xs:"none",sm:"none",md:"block"}}}   >
+        <img src={myImage}  style={{width:"auto",height:80}}  alt="My Icon" />
+    </IconButton>
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -117,9 +159,14 @@ text=="Signin" ?   <Link to={text}>
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: "bold" }}>
-              Bus Ticket Management System
+            <Typography variant="h5" component={"p"} sx={{ flexGrow: 1, fontWeight: "bold" }}>
+            
+            MBITSOBPS  <sub style={{ fontFamily: theme.palette.othercolor.fontfamiily }}>
+        Online Bus Pass System
+      </sub>
             </Typography>
+          
+          
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
 
               {["Home", "About", "Contact", "BookTicket","Signin"].map(text=>(
@@ -135,10 +182,7 @@ text=="Signin" ?   <Link to={text}>
      !user ? <Link to={text}>
        
      <Button color="inherit"     sx={{color:"white"}}>{text}</Button>
-     </Link>:     <Button color="inherit"    onClick={()=>{
-      localStorage.removeItem("auth")
-      setuser(false)
-     }}  sx={{color:"white"}}>Logout</Button>
+     </Link>:""
       
       
       // <Link to={text}>
@@ -150,18 +194,50 @@ text=="Signin" ?   <Link to={text}>
       
       :
              
-          user &&  <Link to={text}>
+          user &&   !admin && <Link to={text}>
              
           <Button color="inherit"   sx={{color:"white"}}>{text}</Button>
           </Link>
+        
+  
+       }
        
-       }</>
+      
+       
+       
+       </>
+   
 
 
               ))}
               
-              
+
              
+              {admin &&
+        <Link to={"/addpass"}>
+             
+          <Button color="inherit"   sx={{color:"white"}}>Add student</Button>
+          </Link>
+       }
+
+             
+             {admin &&
+        <Link to={"/showconsession"}>
+             
+          <Button color="inherit"   sx={{color:"white"}}>
+
+
+          Show Consession Granted
+
+          </Button>
+          </Link>
+       }
+
+{user&&
+                   <Button color="inherit"     onClick={()=>{
+                    localStorage.removeItem("auth")
+                    setuser(false)
+                   }}  sx={{color:"white"}}>Logout</Button>}
             </Box>
           </Toolbar>
         </AppBar>

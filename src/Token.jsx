@@ -1,4 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
+
+import { addDoc, collection, serverTimestamp , query,
+    orderBy,
+    onSnapshot,
+    limit, } from "firebase/firestore";
+    
 import { ourcontext } from "./App";
 import {
   Card,
@@ -12,6 +18,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Loginpage from "./Login";
+import { db } from "./Firebase";
 
 const now = new Date();
 let currentHour = now.getHours();
@@ -37,9 +44,36 @@ function Token() {
   const [fromLocation, setFromLocation] = useState("");
   const [toLocation, setToLocation] = useState("");
   const [email, setEmail] = useState(user.email);
+  const [semister, setsemister] = useState("")
+  const [department, setdepartment] = useState("")
+  const [division, setdivision] = useState("")
   const [status, setStatus] = useState(checkTimePeriod(currentHour));
   const [successid, setsuccessid] = useState("")
+  const [error, seterror] = useState(false)
 const [name, setname] = useState(user.displayName ?? "")
+
+const [fetcheddta, setfetcheddta] = useState([])
+  useEffect(() => {
+    const q = query(
+      collection(db, "studentpass"),
+      orderBy("createdAt", "desc"),
+      limit(50)
+    );
+    const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
+      const fetchedMessages = [];
+      QuerySnapshot.forEach((doc) => {
+        fetchedMessages.push({ ...doc.data(), id: doc.id });
+      });
+  
+      const sortedMessages = fetchedMessages.sort(
+        (a, b) => a.createdAt - b.createdAt
+      );
+      console.log(sortedMessages,"soarrtyghg")
+  setfetcheddta(sortedMessages)
+     
+    });
+    // return () => unsubscribe;
+  }, []);
   const locationOptions = [
     "Angamaly",
     "Trippunitara",
@@ -69,6 +103,11 @@ if (successid) {
         toLocation,
         status,
         successid,
+        semister,
+        department,
+        division,
+        email,
+
       time:` ${year}-${month}-${day} ${hours}:${minutes}:${seconds}
 
       `
@@ -83,9 +122,9 @@ navigate("/tokenshow",{state:valuespass})
 
   useEffect(() => {
     if (checkTimePeriod(currentHour) === "Morning") {
-      setToLocation("collagename");
+      setToLocation("MBITS COLLEGE");
     } else {
-      setFromLocation("collagename");
+      setFromLocation("MBITS COLLEGE");
     }
   }, []);
 
@@ -96,6 +135,30 @@ navigate("/tokenshow",{state:valuespass})
   }, []);
 
   async function Displayrazorpay() {
+
+
+
+    seterror(false)
+ 
+  if (fromLocation.trim()==""||  toLocation.trim()=="" || name.trim()==""  ||  semister.trim()=="" || division.trim()=="" || department.trim()==""   ) {
+   seterror(true)
+   return 
+  }
+
+
+  let exist=false
+
+  if (fetcheddta) {
+    let sta=fetcheddta.some(el=>el.email===user.email)
+  exist=sta;
+
+  }
+
+  if (!exist) {
+
+    alert("you donot have acces to take token  plz contact the admin")
+  return
+  }
     let res = await loadrazorpay("https://checkout.razorpay.com/v1/checkout.js");
   
     if (!res) {
@@ -103,22 +166,41 @@ navigate("/tokenshow",{state:valuespass})
       return;
     }
   
-    let data = await fetch("http://localhost:1337/razorpay", {
+    let data = await fetch("https://busmang.onrender.com/razorpay", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: 60 }), // Ensure correct amount
+      body: JSON.stringify({ amount: 60 }),
     }).then((t) => t.json());
   
+    // const options = {
+    //   key: "rzp_test_aGs9hkOcUXTL4t",
+    //   amount: data.amount.toString(),
+    //   currency: data.currency,
+    //   name: "Acme Corp",
+    //   description: "Test Transaction",
+    //   order_id: data.id,
+    //   handler: function (response) {
+    //     console.log("Payment successful:", response);
+    //     setsuccessid(response.razorpay_payment_id); // Set payment success ID
+    //   },
+    //   prefill: {
+    //     name: name,
+    //     email: email,
+    //   },
+    //   theme: {
+    //     color: "#039dfc",
+    //   },
+    // };
     const options = {
       key: "rzp_test_aGs9hkOcUXTL4t",
       amount: data.amount.toString(),
       currency: data.currency,
-      name: "Acme Corp",
+      name: name,
       description: "Test Transaction",
       order_id: data.id,
       handler: function (response) {
         console.log("Payment successful:", response);
-        setsuccessid(response.razorpay_payment_id); // Set payment success ID
+        setsuccessid(response.razorpay_payment_id);
       },
       prefill: {
         name: name,
@@ -127,7 +209,18 @@ navigate("/tokenshow",{state:valuespass})
       theme: {
         color: "#039dfc",
       },
+      modal: {
+        
+        ondismiss: function () {
+          alert("Payment window closed.");
+        },
+        backdropclose: false, // Prevent accidental close
+      },
+      // Force opening in new tab if in mobile browser
+      timeout: 2000, // 5 seconds timeout
     };
+    
+    
   
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
@@ -145,7 +238,7 @@ navigate("/tokenshow",{state:valuespass})
           <Typography variant="subtitle1" color="textSecondary" gutterBottom>
             Good {status}, {user.email}
           </Typography>
-
+  {error && <p  style={{color:"red"}}>Invalid    data inputed    </p> }
           {status === "Morning" ? (
             <Select fullWidth margin="normal" value={fromLocation} onChange={(e) => setFromLocation(e.target.value)}>
               {locationOptions.map((location, index) => (
@@ -171,7 +264,15 @@ navigate("/tokenshow",{state:valuespass})
           )}
 
           <TextField fullWidth margin="normal" label="Email" variant="outlined" value={email} disabled />
-          <TextField fullWidth margin="normal" label="Name" variant="outlined" onChange={(e)=> setname(e.target.value)}  value={name} disabled={user.displayName && true } />
+          <TextField fullWidth margin="normal" label="Name" variant="outlined" onChange={(e)=> setname(e.target.value)}  value={name}  />
+         
+          <TextField fullWidth margin="normal" label="Semister" variant="outlined" onChange={(e)=> setsemister(e.target.value)}  value={semister}  />
+         
+          <TextField fullWidth margin="normal" label="Division" variant="outlined" onChange={(e)=> setdivision(e.target.value)}  value={division}  />
+         
+          <TextField fullWidth margin="normal" label="Department" variant="outlined" onChange={(e)=> setdepartment(e.target.value)}  value={department}  />
+         
+         
           <Typography variant="h5" fontWeight="bold">Payment: ₹60</Typography>
           <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={Displayrazorpay}>
             Generate Token

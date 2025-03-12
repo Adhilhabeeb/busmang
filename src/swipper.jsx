@@ -61,7 +61,7 @@ export const Swipperpage = () => {
       </Container>
 
       {/* Advantages Section */}
-      <Container sx={{ mt: 8, textAlign: "center" }}>
+      {/* <Container sx={{ mt: 8, textAlign: "center" }}>
         <Typography variant="h4" fontWeight="bold" color="secondary" gutterBottom>
           Why Choose Us?
         </Typography>
@@ -83,7 +83,7 @@ export const Swipperpage = () => {
             </Grid>
           ))}
         </Grid>
-      </Container>
+      </Container> */}
     </>
   );
 };

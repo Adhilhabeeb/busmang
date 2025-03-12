@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Typography, Button, Grid, Box, Paper } from "@mui/material";
+import { Container, Typography, Button, Grid, Box, Paper, styled } from "@mui/material";
 import { motion } from "framer-motion";
 import busImage from "../src/assets/bgbus2.png";
 import aboutUsImage from "../src/assets/ee.png"; // Add an image for About Us
@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { Swipperpage } from "./swipper";
 
 export const Home = () => {
+  
+
+
   let navigate = useNavigate();
 
   return (
