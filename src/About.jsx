@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Container, Typography, Box, Grid, Button, Paper } from "@mui/material";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { ourcontext } from "./App";
+import Loginpage from "./Login";
+import busImage from "../src/assets/BG4.webp";
 
 export const About = () => {
+  let navigate = useNavigate();
+let {user}=useContext(ourcontext)
+     useEffect(() => {
+       if ( !JSON.parse(localStorage.getItem("auth"))) {
+      navigate("/")
+       }else{
+   
+         console.log(JSON.parse(localStorage.getItem("auth")),"yyyyy")
+       }
+     })
   return (
-    <Box>
+
+    <>
+
+{
+     user ?
+     <Box>
       {/* Hero Section */}
       <Box
         sx={{
@@ -46,11 +65,8 @@ export const About = () => {
           {/* Right: Image or Placeholder */}
           <Grid item xs={12} md={6}>
             <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }}>
-              <Paper elevation={3} sx={{ height: 200, display: "flex", alignItems: "center", justifyContent: "center", bgcolor: "#f5f5f5" }}>
-                <Typography variant="h6" color="primary">
-                  {/* You can replace this with an actual image */}
-                  Image Placeholder
-                </Typography>
+              <Paper elevation={3} sx={{ height: {xs:300,md:400,lg:500}, display: "flex", alignItems: "center", justifyContent: "center", bgcolor: "#f5f5f5" }}>
+           <Box     width={"100%"}    height={"100%"}   src={busImage} component={"img"} />
               </Paper>
             </motion.div>
           </Grid>
@@ -102,5 +118,10 @@ export const About = () => {
         </motion.div>
       </Box>
     </Box>
+     
+     :<Loginpage/>}
+
+    </>
+   
   );
 };

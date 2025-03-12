@@ -21,9 +21,22 @@ function App() {
   const [count, setCount] = useState(0)
   const [user, setuser] = useState(false)
 
+
   useEffect(() => {
-   console.log(user,"uusserr")
+  if (user) {
+    localStorage.setItem("auth",JSON.stringify(user))
+  }
   }, [user])
+
+  useEffect(() => {
+   
+let auth=JSON.parse(localStorage.getItem("auth"))
+
+if (auth) {
+ setuser(auth)
+}
+  }, [])
+  
   
   return (
     <ourcontext.Provider value={{user,setuser}}>

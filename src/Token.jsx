@@ -11,6 +11,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Loginpage from "./Login";
 
 const now = new Date();
 let currentHour = now.getHours();
@@ -96,18 +97,18 @@ navigate("/tokenshow",{state:valuespass})
 
   async function Displayrazorpay() {
     let res = await loadrazorpay("https://checkout.razorpay.com/v1/checkout.js");
-
+  
     if (!res) {
       alert("Razorpay SDK failed to load. Are you online?");
       return;
     }
-
+  
     let data = await fetch("http://localhost:1337/razorpay", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: 600 }),
+      body: JSON.stringify({ amount: 60 }), // Ensure correct amount
     }).then((t) => t.json());
-
+  
     const options = {
       key: "rzp_test_aGs9hkOcUXTL4t",
       amount: data.amount.toString(),
@@ -116,25 +117,26 @@ navigate("/tokenshow",{state:valuespass})
       description: "Test Transaction",
       order_id: data.id,
       handler: function (response) {
-       
-        setsuccessid(response.razorpay_payment_id)
+        console.log("Payment successful:", response);
+        setsuccessid(response.razorpay_payment_id); // Set payment success ID
       },
       prefill: {
-        name: "Gaurav Kumar",
-        email: "gaurav.kumar@example.com",
-        contact: "9999999999",
+        name: name,
+        email: email,
       },
       theme: {
-        color: "#F37254",
+        color: "#039dfc",
       },
     };
-
+  
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
   }
-
+  
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" height="100vh" bgcolor="#f5f5f5">
+
+    <>
+  {   user ? <Box display="flex" justifyContent="center" alignItems="center" height="100vh" bgcolor="#f5f5f5">
       <Card sx={{ width: 400, p: 2, textAlign: "center", boxShadow: 3 }}>
         <CardContent>
           <Typography variant="h5" fontWeight="bold">
@@ -176,7 +178,9 @@ navigate("/tokenshow",{state:valuespass})
           </Button>
         </CardContent>
       </Card>
-    </Box>
+    </Box> :<Loginpage/>}
+    </>
+
   );
 }
 

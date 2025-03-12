@@ -20,6 +20,18 @@ var razarpay = new Razorpay({
     amount=receivedData;
     res.json({ message: "Data received successfully", data: receivedData });
 });
+
+app.post("/webhook", express.json(), (req, res) => {
+  const event = req.body;
+  console.log("Webhook event received:", event);
+
+  if (event.event === "payment.captured") {
+    console.log("Payment successful:", event.payload.payment.entity.id);
+  }
+
+  res.status(200).json({ status: "Webhook received" });
+});
+
  app.post('/razorpay', async(req,res)=>{
   const { amount } = req.body; // Get amount from request body
   console.log("Received amount:", amount);

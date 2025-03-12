@@ -6,11 +6,11 @@ import { AppBar, Toolbar, Typography, Button, Container, Box, IconButton, Drawer
 import { motion } from "framer-motion";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ourcontext } from "./App";
  export const Header = () => {
-  let {user}=useContext(ourcontext)
-
+  let {user,setuser}=useContext(ourcontext)
+let navigate=useNavigate()
   
     const [mobileOpen, setMobileOpen] = useState(false);
   
@@ -23,14 +23,14 @@ import { ourcontext } from "./App";
         <List>
           {["Home", "About", "Contact", "BookTicket","Signin"].map((text) => (
         <>
-       {text=="Home"?
+       {/* {text=="Home"?
        <Link to={"/"}>
        <ListItem button key={text}>
               <ListItemText primary={text} />
             </ListItem>  
        
        </Link>:
-text=="Signin" && !user?   <Link to={text}>
+text=="Signin" ?   <Link to={text}>
        
 <Button variant="contained"  sx={{background:"white"}}>
 <ListItem button key={text}>
@@ -45,6 +45,56 @@ text=="Signin" && !user?   <Link to={text}>
               <ListItemText primary={text} />
             </ListItem>
        </Link>
+       
+       } */}
+       {text=="Home"?
+        <Link to={"/"}>
+        <ListItem button key={text}>
+               <ListItemText primary={text} />
+             </ListItem>  
+        
+        </Link>:
+       
+       
+      text=="Signin" ? 
+     !user ? <Link to={text}>
+       
+       <ListItem button key={text}>
+               <ListItemText primary={text} />
+             </ListItem>  
+     </Link>
+     
+     
+     
+     :  
+       
+  //    <ListItem button key={text} >
+  //    <ListItemText primary={text} />
+  //  </ListItem>  
+
+
+     
+     <Button color="inherit"   variant="contained"    onClick={()=>{
+      localStorage.removeItem("auth")
+      setuser(false)
+     }}  >Logout</Button>
+      
+      
+      // <Link to={text}>
+       
+      //  <Button color="inherit"   sx={{color:"white"}}>{text}</Button>
+      // </Link> 
+
+
+      
+      :
+             
+          user &&  <Link to={text}>
+             
+             <ListItem button key={text}>
+              <ListItemText primary={text} />
+            </ListItem>
+          </Link>
        
        }
         
@@ -84,8 +134,11 @@ text=="Signin" && !user?   <Link to={text}>
       text=="Signin" ? 
      !user ? <Link to={text}>
        
-     <Button color="inherit"   sx={{color:"white"}}>{text}</Button>
-     </Link>:"" 
+     <Button color="inherit"     sx={{color:"white"}}>{text}</Button>
+     </Link>:     <Button color="inherit"    onClick={()=>{
+      localStorage.removeItem("auth")
+      setuser(false)
+     }}  sx={{color:"white"}}>Logout</Button>
       
       
       // <Link to={text}>
