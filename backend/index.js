@@ -14,6 +14,10 @@ var razarpay = new Razorpay({
   });
   let  amount=100;
   
+  app.get("/", (req, res) => {
+    res.send("Server is running!");
+  });
+  
   app.post("/api/data", (req, res) => {
     const receivedData = req.body;
     console.log("Received Data:", receivedData);
