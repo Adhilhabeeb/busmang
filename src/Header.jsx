@@ -161,7 +161,7 @@ text=="Signin" ?   <Link to={text}>
             </IconButton>
             <Typography variant="h5" component={"p"} sx={{ flexGrow: 1, fontWeight: "bold" }}>
             
-            MBITSOBPS  <sub style={{ fontFamily: theme.palette.othercolor.fontfamiily }}>
+            MBITS  OBPS  <sub style={{ fontFamily: theme.palette.othercolor.fontfamiily }}>
         Online Bus Pass System
       </sub>
             </Typography>

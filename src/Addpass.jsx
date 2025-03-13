@@ -72,6 +72,12 @@ const [fetcheddta, setfetcheddta] = useState([])
       alert("All fields are required!");
       return;
     }
+
+    if(!formData.email.includes('.cse22@mbits.ac.in')){
+
+      alert("plz enter your email with collage emzil format")
+       return 
+     }
     
     let useralreadyexust=false
 fetcheddta?.forEach(e=>{

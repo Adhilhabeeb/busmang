@@ -21,7 +21,7 @@ export const ourcontext = createContext();
 
 
 function App() {
-  const [admins, setadmins] = useState(["adhilhabeeb960571@gmail.com"])
+  const [admins, setadmins] = useState(["adhilhabeeb960571@gmail.com","basilke00@gmail.com"])
   const [count, setCount] = useState(0)
   const [user, setuser] = useState(false)
 const [admin, setadmin] = useState(false)

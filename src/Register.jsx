@@ -25,6 +25,12 @@ function handleregister(e) {
         alert("Please enter an email and password.");
         return;
       }
+
+      if(!email.includes('.cse22@mbits.ac.in')){
+
+        alert("plz enter your email with collage emzil format")
+         return 
+       }
         createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setError(false)
