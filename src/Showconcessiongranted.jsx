@@ -57,7 +57,7 @@ console.log(fetchedData,"fff")
             <TableCell><strong>Department</strong></TableCell>
             <TableCell><strong>Admission Date</strong></TableCell>
             <TableCell><strong> Email</strong></TableCell>
-            <TableCell><strong>Course</strong></TableCell>
+         
             <TableCell><strong>generated at </strong></TableCell>
 
             
@@ -73,7 +73,7 @@ console.log(fetchedData,"fff")
                 <TableCell>{student.department}</TableCell>
                 <TableCell>{student.admissiondate}</TableCell>
                 <TableCell>{student.email}</TableCell>
-                <TableCell>{student.course}</TableCell>
+               
                 <TableCell>{student.dategenerated}</TableCell>
               </TableRow>
             ))

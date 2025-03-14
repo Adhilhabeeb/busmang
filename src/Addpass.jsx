@@ -59,6 +59,11 @@ const [fetcheddta, setfetcheddta] = useState([])
    dategenerated:`${year}-${month}-${day}`
   });
 
+  
+  useEffect(() => {
+   console.log(formData,"fordarta")
+  }, [formData])
+  
   // Handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
