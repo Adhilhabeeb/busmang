@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { TextField, Button, Box, Typography } from "@mui/material";
 import { ourcontext } from "./App";
 import Loginpage from "./Login";
@@ -9,6 +10,7 @@ import { addDoc, collection, serverTimestamp , query,
     limit, } from "firebase/firestore";
 import { db } from "./Firebase";
 import { useNavigate } from "react-router-dom";
+import { Login } from "@mui/icons-material";
 function Addpass() {
   const { user, setuser, admin } = useContext(ourcontext);
   let navigate=useNavigate()
@@ -54,7 +56,7 @@ const [fetcheddta, setfetcheddta] = useState([])
     dob: "",
     department: "",
     admissiondate: "",
-    course: "",dategenerated:`${year}-${month}-${day}`
+   dategenerated:`${year}-${month}-${day}`
   });
 
   // Handle input change
@@ -103,7 +105,7 @@ return
   };
 
   if (!user) {
-    return <Loginpage />;
+    return <Login />;
   }
 
   return (
@@ -149,14 +151,21 @@ return
           fullWidth
           margin="normal"
         />
-        <TextField
-          label="Department"
-          name="department"
-          value={formData.department}
-          onChange={handleChange}
+          <InputLabel>Department</InputLabel>
+
+         <Select
           fullWidth
-          margin="normal"
-        />
+        defaultValue="MECH"
+    name="department"
+    value={formData.department}
+    onChange={handleChange}
+  >
+    <MenuItem value="CSE">CSE</MenuItem>
+    <MenuItem value="ECE">ECE</MenuItem>
+    <MenuItem value="EEE">EEE</MenuItem>
+    <MenuItem value="CE">CE</MenuItem>
+    <MenuItem value="MECH">MECH</MenuItem>
+  </Select>
         <TextField
           label="Admission Date"
           name="admissiondate"
@@ -167,14 +176,7 @@ return
           fullWidth
           margin="normal"
         />
-        <TextField
-          label="Course"
-          name="course"
-          value={formData.course}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-        />
+       
 
         <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
           Submit

@@ -114,11 +114,11 @@ export const Footer = () => {
               </Typography>
               <Box display="flex" alignItems="center" mt={1}>
                 <EmailIcon fontSize="small" sx={{ mr: 1 }} />
-                <Typography variant="body2">adhil@gmail.com</Typography>
+                <Typography variant="body2">basilke00@gmail.com</Typography>
               </Box>
               <Box display="flex" alignItems="center" mt={1}>
                 <PhoneIcon fontSize="small" sx={{ mr: 1 }} />
-                <Typography variant="body2">+91 87142</Typography>
+                <Typography variant="body2">+91 88484 30110</Typography>
               </Box>
             </motion.div>
           </Grid>

@@ -40,7 +40,7 @@ setadmin(true)
     palette:{
      
     othercolor:{
-      bfclr: "#deceaa",
+      bfclr: "#feb297",
       main:"#757471",
       fontfamiily:[ 'Indie Flower', 'cursive'].join(","),
       gemfamily:['Grechen Fuemen','sans-serif'].join(","),

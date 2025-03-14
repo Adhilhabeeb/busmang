@@ -144,22 +144,22 @@ text=="Signin" ?   <Link to={text}>
   
     return (
       <>
-        <AppBar position="static" mt={5} sx={{ mt:2,background: "#1e88e5",width:{sm:"100%",md:"98%"} ,display:"block",marginLeft:"auto",marginRight:"auto",borderRadius:{sm:"0",md:"8px"} }}    >
+        <AppBar position="static"  sx={{ background: "#1e88e5",width:{sm:"100%"},borderRadius:{sm:"0"},boxSizing:"border-box",height:{sm:"13vh",md:"10vh"} }}    >
       
           <Toolbar>
           <IconButton   sx={{display:{xs:"none",sm:"none",md:"block"}}}   >
-        <img src={myImage}  style={{width:"auto",height:80}}  alt="My Icon" />
+        <img src={myImage}  style={{width:"auto",height:70}}  alt="My Icon" />
     </IconButton>
             <IconButton
               color="inherit"
               aria-label="open drawer"
               edge="start"
-              sx={{ display: { xs: "block", sm: "none" } }}
+              sx={{ display: { sm: "block",md:"none" } }}
               onClick={handleDrawerToggle}
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h5" component={"p"} sx={{ flexGrow: 1, fontWeight: "bold" }}>
+            <Typography variant="h5" component={"p"} sx={{ flexGrow: 1, fontWeight: "bold",mt:{xs:4,sm:4,md:0} }}>
             
             MBITS  OBPS  <sub style={{ fontFamily: theme.palette.othercolor.fontfamiily }}>
         Online Bus Pass System
@@ -167,7 +167,7 @@ text=="Signin" ?   <Link to={text}>
             </Typography>
           
           
-            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            <Box sx={{ display:{xs:"none",sm:"none",md:"block"} }}>
 
               {["Home", "About", "Contact", "BookTicket","Signin"].map(text=>(
 <>
@@ -224,7 +224,7 @@ text=="Signin" ?   <Link to={text}>
              {admin &&
         <Link to={"/showconsession"}>
              
-          <Button color="inherit"   sx={{color:"white"}}>
+          <Button color="inherit"   sx={{color:"white",display:{xs:"none",sm:"none",md:"inline"}}}>
 
 
           Show Consession Granted

@@ -4,7 +4,7 @@ import { addDoc, collection, serverTimestamp , query,
     orderBy,
     onSnapshot,
     limit, } from "firebase/firestore";
-    
+ 
 import { ourcontext } from "./App";
 import {
   Card,
@@ -14,7 +14,7 @@ import {
   Button,
   Box,
   Select,
-  MenuItem,
+  MenuItem,InputLabel
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Loginpage from "./Login";
@@ -122,12 +122,31 @@ navigate("/tokenshow",{state:valuespass})
 
   useEffect(() => {
     if (checkTimePeriod(currentHour) === "Morning") {
+     
       setToLocation("MBITS COLLEGE");
     } else {
       setFromLocation("MBITS COLLEGE");
     }
   }, []);
 
+
+  useEffect(() => {
+  
+
+    if (status=="Morning") {
+      setToLocation("MBITS COLLEGE");
+      
+    }else{
+      setFromLocation("MBITS COLLEGE");
+
+    }
+  
+   
+  }, [status])
+  
+
+ 
+  
   useEffect(() => {
     if (!user) {
       navigate("/");
@@ -165,6 +184,7 @@ navigate("/tokenshow",{state:valuespass})
       alert("Razorpay SDK failed to load. Are you online?");
       return;
     }
+    
   
     let data = await fetch("https://busmang.onrender.com/razorpay", {
       method: "POST",
@@ -238,7 +258,24 @@ navigate("/tokenshow",{state:valuespass})
           <Typography variant="subtitle1" color="textSecondary" gutterBottom>
             Good {status}, {user.email}
           </Typography>
+
+
+
   {error && <p  style={{color:"red"}}>Invalid    data inputed    </p> }
+
+  <Select
+    labelId="demo-simple-select-label"
+    id="demo-simple-select"
+    value={status}
+    label="status"
+    onChange={(e)=>setStatus(e.target.value)}
+  >
+    <MenuItem value={"Morning"}>Morning</MenuItem>
+    <MenuItem value={"Evening"}>Evening</MenuItem>
+\
+  </Select>
+
+
           {status === "Morning" ? (
             <Select fullWidth margin="normal" value={fromLocation} onChange={(e) => setFromLocation(e.target.value)}>
               {locationOptions.map((location, index) => (
@@ -270,9 +307,21 @@ navigate("/tokenshow",{state:valuespass})
          
           <TextField fullWidth margin="normal" label="Division" variant="outlined" onChange={(e)=> setdivision(e.target.value)}  value={division}  />
          
-          <TextField fullWidth margin="normal" label="Department" variant="outlined" onChange={(e)=> setdepartment(e.target.value)}  value={department}  />
+          <InputLabel>Department</InputLabel>
          
-         
+                <Select
+                   fullWidth
+                 defaultValue="MECH"
+             name="department"
+             value={department}
+             onChange={(e)=> setdepartment(e.target.value)}
+           >
+             <MenuItem value="CSE">CSE</MenuItem>
+             <MenuItem value="ECE">ECE</MenuItem>
+             <MenuItem value="EEE">EEE</MenuItem>
+             <MenuItem value="CE">CE</MenuItem>
+             <MenuItem value="MECH">MECH</MenuItem>
+           </Select>
           <Typography variant="h5" fontWeight="bold">Payment: ₹60</Typography>
           <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={Displayrazorpay}>
             Generate Token

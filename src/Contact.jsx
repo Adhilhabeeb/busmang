@@ -49,11 +49,11 @@ const Contact = () => {
               </Typography>
               <Box display="flex" alignItems="center" gap={1}>
                 <EmailIcon color="primary" />
-                <Typography>adhil@gmail.com</Typography>
+                <Typography>basilke00@gmail.com</Typography>
               </Box>
               <Box display="flex" alignItems="center" gap={1} mt={2}>
                 <PhoneIcon color="primary" />
-                <Typography>082798679</Typography>
+                <Typography>+91 88484 30110</Typography>
               </Box>
               <Box display="flex" alignItems="center" gap={1} mt={2}>
                 <LocationOnIcon color="primary" />
@@ -65,7 +65,7 @@ const Contact = () => {
         <Grid item xs={12} md={7}>
           <Card sx={{ boxShadow: 3, p: 3, borderRadius: 2 }}>
             <CardContent>
-              <Typography variant="h6" gutterBottom fontWeight="bold">
+              <Typography variant="h6" gutterBottom fontWeight="bold"  >
                 Send Us a Message
               </Typography>
               <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>

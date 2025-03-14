@@ -4,6 +4,7 @@ import { collection, query, orderBy, limit, onSnapshot } from "firebase/firestor
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from "@mui/material";
 import { db } from "./Firebase";
 import { ourcontext } from "./App";
+import Loginpage from "./Login";
 
 function Showconcessiongranted() {
       const { user, setuser, admin } = useContext(ourcontext);
@@ -55,6 +56,7 @@ console.log(fetchedData,"fff")
             <TableCell><strong>Date of Birth</strong></TableCell>
             <TableCell><strong>Department</strong></TableCell>
             <TableCell><strong>Admission Date</strong></TableCell>
+            <TableCell><strong> Email</strong></TableCell>
             <TableCell><strong>Course</strong></TableCell>
             <TableCell><strong>generated at </strong></TableCell>
 
@@ -70,6 +72,7 @@ console.log(fetchedData,"fff")
                 <TableCell>{student.dob}</TableCell>
                 <TableCell>{student.department}</TableCell>
                 <TableCell>{student.admissiondate}</TableCell>
+                <TableCell>{student.email}</TableCell>
                 <TableCell>{student.course}</TableCell>
                 <TableCell>{student.dategenerated}</TableCell>
               </TableRow>

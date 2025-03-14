@@ -1,54 +1,60 @@
 import React from "react";
-import { Container, Typography, Button, Grid, Box, Paper, styled } from "@mui/material";
+import { Container, Typography, Button, Grid, Box, Paper, styled, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import busImage from "../src/assets/bgbus2.png";
 import aboutUsImage from "../src/assets/ee.png"; // Add an image for About Us
 import { useNavigate } from "react-router-dom";
 import { Swipperpage } from "./swipper";
-
+    import bgimage from "./assets/mbits-banner.png"
 export const Home = () => {
   
-
+let theme=useTheme()
 
   let navigate = useNavigate();
 
   return (
     <>
       {/* Hero Section */}
-      <Container maxWidth="lg" sx={{ mt: 5 }}>
-        <Grid container spacing={4} alignItems="center">
-          {/* Left Section: Text */}
-          <Grid item xs={12} md={6}>
-            <motion.div initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-              <Typography variant="h3" fontWeight="bold" color="primary" gutterBottom>
+      <Box
+  sx={{
+   
+    backgroundImage: `url(${bgimage})`, // Ensure bgimage is a valid image URL
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    height: "90vh", // Adjust as needed,
+   boxSizing:"border-box",
+  textAlign:"center",
+  paddingTop:14
+  }}
+>
+
+      
+  <Box >
+<motion.div initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+              <Typography variant="h3"  sx={{color: "#fff" }} fontWeight="bold" color="primary" gutterBottom>
                 Book Your Bus Tickets Easily!
               </Typography>
             </motion.div>
-
             <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, delay: 0.5 }}>
-              <Typography variant="body1" color="textSecondary" sx={{ fontSize: "1.2rem", mb: 3 }}>
+              <Typography variant="body1"  component={"p"} sx={{ fontSize: "1.2rem", mb: 3,color:"rgb(255, 255, 255)" }}>
                 Your one-stop solution for booking bus tickets. Find buses, check schedules, and secure your seat with ease!
               </Typography>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 1 }}>
-              <Button variant="contained" color="primary" onClick={() => navigate("BookTicket")} sx={{ mr: 2 }}>
+            <motion.div initial={{ opacity: 0, y: 50 }}  animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 1 }}>
+              <Button variant="contained" color="primary" onClick={() => navigate("BookTicket")} sx={{ mr: 2,mt:6 }}>
                 Book Now
               </Button>
-              <Button variant="outlined" color="secondary">
+              <Button variant="contained"  sx={{ mt:6,color:"rgb(30, 136, 229)",background:"white" }}>
                 Learn More
               </Button>
             </motion.div>
-          </Grid>
+    
 
           {/* Right Section: Image */}
-          <Grid item xs={12} md={6}>
-            <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: 0.7 }}>
-              <Box component="img" src={busImage} alt="Bus Travel" sx={{ width: "100%", height: "auto", borderRadius: 3 }} />
-            </motion.div>
-          </Grid>
-        </Grid>
-      </Container>
+          </Box>
+      </Box>
 
 <Swipperpage/>
       {/* About Us Section */}
