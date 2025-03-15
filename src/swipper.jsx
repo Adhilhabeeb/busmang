@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Typography, Grid, Card, CardContent, Box } from "@mui/material";
+import { Container, Typography, Grid, Card, CardContent, Box ,Paper } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -8,9 +8,22 @@ import { motion } from "framer-motion";
 
 // Sample Data for Services & Advantages
 const services = [
-  { title: "Easy Online Booking", description: "Book your tickets in just a few clicks from anywhere." },
-  { title: "Real-Time Tracking", description: "Track your bus in real time for better travel planning." },
-  { title: "24/7 Customer Support", description: "We are here to assist you anytime, anywhere." },
+  {
+    title: "Easy online registration and login for students",
+    desc: "Effortlessly create and manage your student account with our seamless registration process."
+  },
+  {
+    title: "Hassle-free bus route selection and pass renewal",
+    desc: "Find the best routes and renew your bus pass with just a few clicks, saving you time and effort."
+  },
+  {
+    title: "Secure payment integration for a worry-free experience",
+    desc: "Make transactions with confidence using our advanced security and reliable payment gateways."
+  },
+  {
+    title: "Instant generation of digital bus passes that are eco-friendly and convenient",
+    desc: "Say goodbye to paper passes—access your digital pass instantly, reducing waste and making travel easier."
+  },
 ];
 
 const advantages = [
@@ -23,43 +36,33 @@ export const Swipperpage = () => {
   return (
     <>
       {/* Services Section with Swiper */}
-      <Container sx={{ mt: 5, textAlign: "center" }}>
-        <Typography variant="h4" fontWeight="bold" color="primary" gutterBottom>
-          Our Services
+      <Box sx={{ py: 6, background: "#f9f9f9" }}>
+      <Container>
+        <Typography variant="h4" fontWeight="bold" textAlign="center" color="primary">
+          What We Offer
         </Typography>
-
-        <Swiper
-          modules={[Pagination, Autoplay]}
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 2500 }}
-          loop
-          spaceBetween={20}
-          slidesPerView={1}
-          breakpoints={{
-            600: { slidesPerView: 2 },
-            900: { slidesPerView: 3 },
-          }}
-          style={{ padding: "20px" }}
-        >
+        <Grid container spacing={4} sx={{ mt: 3 }}>
           {services.map((service, index) => (
-            <SwiperSlide key={index}>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.3 }}
+            <Grid item xs={12} md={3} key={index}>
+              <motion.div 
+                initial={{ opacity: 0, y: 50 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                transition={{ duration: 1, delay: index * 0.2 }}
               >
-                <Card sx={{ p: 3, textAlign: "center", boxShadow: 3 }}>
-                  <CardContent>
-                    <Typography variant="h6" fontWeight="bold">{service.title}</Typography>
-                    <Typography variant="body2" color="textSecondary">{service.description}</Typography>
-                  </CardContent>
-                </Card>
+                <Paper sx={{ p: 3, textAlign: "center", boxShadow: 2 }}>
+                  <Typography variant="h6" fontWeight="bold" color="primary">
+                    {service.title}
+                  </Typography>
+                  <Typography variant="body2" sx={{ mt: 1, color: "text.secondary" }}>
+                    {service.desc}
+                  </Typography>
+                </Paper>
               </motion.div>
-            </SwiperSlide>
+            </Grid>
           ))}
-        </Swiper>
+        </Grid>
       </Container>
-
+    </Box>
       {/* Advantages Section */}
       {/* <Container sx={{ mt: 8, textAlign: "center" }}>
         <Typography variant="h4" fontWeight="bold" color="secondary" gutterBottom>

@@ -129,7 +129,7 @@ export const Footer = () => {
 
         {/* Social Media & Copyright */}
         <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap">
-          <Typography variant="body2">© 2025 Bus Ticket Management System. All rights reserved.</Typography>
+          <Typography variant="body2">© 2025  Online Bus Pass System. All rights reserved.</Typography>
           <Box>
             <IconButton color="inherit">
               <FacebookIcon />

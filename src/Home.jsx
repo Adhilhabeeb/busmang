@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Typography, Button, Grid, Box, Paper, styled, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import busImage from "../src/assets/bgbus2.png";
-import aboutUsImage from "../src/assets/ee.png"; // Add an image for About Us
+import aboutUsImage from "../src/assets/busnt1.jpg"; // Add an image for About Us
 import { useNavigate } from "react-router-dom";
 import { Swipperpage } from "./swipper";
     import bgimage from "./assets/mbits-banner.png"
@@ -38,7 +38,7 @@ let theme=useTheme()
             </motion.div>
             <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, delay: 0.5 }}>
               <Typography variant="body1"  component={"p"} sx={{ fontSize: "1.2rem", mb: 3,color:"rgb(255, 255, 255)" }}>
-                Your one-stop solution for booking bus tickets. Find buses, check schedules, and secure your seat with ease!
+              Say goodbye to the hassle of long queues and complicated paperwork. Experience the convenience of a fully online, student-friendly system.
               </Typography>
             </motion.div>
 
