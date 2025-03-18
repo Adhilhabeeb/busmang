@@ -46,9 +46,7 @@ let theme=useTheme()
               <Button variant="contained" color="primary" onClick={() => navigate("BookTicket")} sx={{ mr: 2,mt:6 }}>
                 Book Now
               </Button>
-              <Button variant="contained"  sx={{ mt:6,color:"rgb(30, 136, 229)",background:"white" }}>
-                Learn More
-              </Button>
+            
             </motion.div>
     
 

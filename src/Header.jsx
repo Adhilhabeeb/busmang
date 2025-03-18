@@ -135,8 +135,8 @@ text=="Signin" ?   <Link to={text}>
 {admin  &&
         <Link to={"/tokenshowlist"}>
              
-             <ListItem button key={"Show Tokens"}>
-              <ListItemText primary={"Show Tokens"} />
+             <ListItem button key={"Show Tokens List"}>
+              <ListItemText primary={"Show Tokens List"} />
             </ListItem>
           </Link>
        }
@@ -251,7 +251,7 @@ text=="Signin" ?   <Link to={text}>
           <Button color="inherit"   sx={{color:"white",display:{xs:"none",sm:"none",md:"inline"}}}>
 
 
-         Show Tokens
+         Show Tokens List 
 
           </Button>
           </Link>

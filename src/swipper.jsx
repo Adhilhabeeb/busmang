@@ -12,10 +12,7 @@ const services = [
     title: "Easy online registration and login for students",
     desc: "Effortlessly create and manage your student account with our seamless registration process."
   },
-  {
-    title: "Hassle-free bus route selection and pass renewal",
-    desc: "Find the best routes and renew your bus pass with just a few clicks, saving you time and effort."
-  },
+  
   {
     title: "Secure payment integration for a worry-free experience",
     desc: "Make transactions with confidence using our advanced security and reliable payment gateways."
