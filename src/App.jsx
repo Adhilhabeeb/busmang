@@ -17,6 +17,7 @@ import Tokenshow from './Tokenshow'
 import { createTheme, ThemeProvider } from '@mui/material'
 import Addpass from './Addpass'
 import Showconcessiongranted from './Showconcessiongranted'
+import Tokenlistshow from './Tokenlistshow'
 export const ourcontext = createContext();
 
 
@@ -87,6 +88,7 @@ if (auth) {
     <Route path="tokenshow" element={<Tokenshow/>} />
     <Route path="addpass" element={<Addpass/>} />
     <Route path="showconsession" element={<Showconcessiongranted/>} />
+    <Route path="tokenshowlist" element={<Tokenlistshow/>} />
 
 
     

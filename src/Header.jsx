@@ -132,7 +132,14 @@ text=="Signin" ?   <Link to={text}>
             </ListItem>
           </Link>
        }
-
+{admin  &&
+        <Link to={"/tokenshowlist"}>
+             
+             <ListItem button key={"Show Tokens"}>
+              <ListItemText primary={"Show Tokens"} />
+            </ListItem>
+          </Link>
+       }
 
        {user&&  <Button color="inherit"   variant="contained"    onClick={()=>{
       localStorage.removeItem("auth")
@@ -234,6 +241,17 @@ text=="Signin" ?   <Link to={text}>
 
 
           Show Consession Granted
+
+          </Button>
+          </Link>
+       }
+        {admin &&
+        <Link to={"/tokenshowlist"}>
+             
+          <Button color="inherit"   sx={{color:"white",display:{xs:"none",sm:"none",md:"inline"}}}>
+
+
+         Show Tokens
 
           </Button>
           </Link>

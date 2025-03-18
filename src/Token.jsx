@@ -112,10 +112,24 @@ if (successid) {
 
       `
     }
+
+    adddatabase(valuespass)
 navigate("/tokenshow",{state:valuespass})
 }
   }, [successid])
   
+async function adddatabase(value) {
+  
+    await addDoc(collection(db, "tokens"), {
+      ...value,
+       
+        createdAt: serverTimestamp(),
+    
+      });
+
+}
+
+
   function checkTimePeriod(hour) {
     return hour >= 0 && hour < 12 ? "Morning" : "Evening";
   }
@@ -173,11 +187,7 @@ navigate("/tokenshow",{state:valuespass})
 
   }
 
-  if (!exist) {
 
-    alert("you donot have acces to take token  plz contact the admin")
-  return
-  }
     let res = await loadrazorpay("https://checkout.razorpay.com/v1/checkout.js");
   
     if (!res) {
