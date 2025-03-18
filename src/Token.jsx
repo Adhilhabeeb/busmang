@@ -313,7 +313,7 @@ async function adddatabase(value) {
           <TextField fullWidth margin="normal" label="Email" variant="outlined" value={email} disabled />
           <TextField fullWidth margin="normal" label="Name" variant="outlined" onChange={(e)=> setname(e.target.value)}  value={name}  />
          
-          <TextField fullWidth margin="normal" label="Semister" variant="outlined" onChange={(e)=> setsemister(e.target.value)}  value={semister}  />
+          <TextField fullWidth margin="normal" label="Semester" variant="outlined" onChange={(e)=> setsemister(e.target.value)}  value={semister}  />
          
           <TextField fullWidth margin="normal" label="Division" variant="outlined" onChange={(e)=> setdivision(e.target.value)}  value={division}  />
          
