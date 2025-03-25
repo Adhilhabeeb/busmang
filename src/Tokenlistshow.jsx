@@ -22,13 +22,19 @@ import {
 } from "@mui/material";
 import dayjs from "dayjs";
 import { db } from "./Firebase";
+
+
 import { ourcontext } from "./App";
 import { i } from "framer-motion/client";
 import { Login } from "@mui/icons-material";
 import Loginpage from "./Login";
 import { TextField } from "@mui/material";
+import { busRoute } from "./data";
+let numdaysinmonth=20
+let numberofmoinths=6
 
 function TokenListShow() {
+
       let {user}=useContext(ourcontext)
       const [nodata, setnodata] = useState(false)
       const [age, setage] = useState("All")
@@ -39,12 +45,12 @@ function TokenListShow() {
       }, [age])
       
  const [searcheuser, setsearcheuser] = useState("")
-
-
+const [showtotalamou, setshowtotalamou] = useState(false)
+const [totalamountbook, settotalamountbook] = useState(0)
 
  useEffect(() => {
   if (searcheuser.trim()=="") {
-
+setshowtotalamou(false)
     fetchTokens()
     
   }
@@ -230,8 +236,8 @@ getmonthsorders(1)
 }
  
  async function searchfilteruserdata(params) {
-  
-
+  let totaltimesbookedbyuser=0
+  setshowtotalamou(true)
   if (searcheuser.trim()!="" && searcheuser.includes("@mbits.ac.in") || searcheuser.includes("@gmail.com")) {
     setLoading(true);
    try {
@@ -244,6 +250,26 @@ getmonthsorders(1)
     console.log(tokenList,"too")
     let filt=tokenList.filter((item)=>item.email===searcheuser.trim())
     console.log(filt,"filt")
+   
+    
+let totalamouint=0
+    filt.forEach(it=>{
+busRoute.forEach(el=>{
+
+
+ if (it.subjunction==el.name) {
+
+
+   totalamouint+=el.price/(numdaysinmonth*numberofmoinths)/2
+   console.log(totalamouint,"totalamouint",el.price,numdaysinmonth*numberofmoinths/2,"plce",el.name,"and",numdaysinmonth*numberofmoinths,":ann",el.price/(numdaysinmonth*numberofmoinths)/2)
+  
+ }
+})
+      console.log(it,"iiiiiiii")
+    })
+
+console.log(totalamouint,"totalamouint")
+settotalamountbook(totalamouint)
     setTokens(filt);
   } catch (error) {
     console.error("Error fetching tokens:", error);
@@ -252,6 +278,9 @@ getmonthsorders(1)
   }
   }
 }
+  useEffect(() => {
+   console.log(totalamountbook,"totalamountbook")
+  }, [totalamountbook])
   
 
   if (!user){
@@ -309,7 +338,8 @@ getmonthsorders(1)
       {loading ? (
         <CircularProgress />
       ) : (
-        <TableContainer component={Paper}>
+
+        <>  <TableContainer component={Paper}>
           <Table>
             <TableHead>
               <TableRow>
@@ -348,12 +378,17 @@ getmonthsorders(1)
                   <TableCell>{token.time}</TableCell>
                   
                 </TableRow>
+                
+                
               )) :<Box display="flex" justifyContent="center" alignItems="center" height="50vh" width="100%" >
                 <Typography variant="h5" color="error" >No Data Available</Typography>  
                 </Box>}
             </TableBody>
+            { showtotalamou&& <Typography  mt={2} variant="h5" component={"p"}>Total Amount:{totalamountbook}</Typography>}
           </Table>
         </TableContainer>
+        </>
+      
       )}
     </div>
   );
