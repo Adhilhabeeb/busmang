@@ -75,7 +75,7 @@ function Mytonepage() {
                 <TableCell><b>Email</b></TableCell>
                
                 <TableCell><b>Time</b></TableCell>
-                <TableCell><b>Booking for date </b></TableCell>
+              
 
               </TableRow>
             </TableHead>
@@ -87,14 +87,6 @@ function Mytonepage() {
                   
                   <TableCell>{token.toLocation}</TableCell>
                   <TableCell>{token.subjunction}</TableCell>
-                  <TableCell>{token.Bookingdate}</TableCell>
-                  <TableCell>{token.status}</TableCell>
-                  <TableCell>{token.successid}</TableCell>
-                  <TableCell>{token.semister}</TableCell>
-                  <TableCell>{token.department}</TableCell>
-                  <TableCell>{token.division}</TableCell>
-                  <TableCell>{token.email}</TableCell>
-                  <TableCell>{token.time}</TableCell>
                   <TableCell>
 
 
@@ -102,6 +94,14 @@ function Mytonepage() {
             Selected Date: {dayjs(token.Bookingdate).format("YYYY-MM-DD")}
         
                   </TableCell>
+                  <TableCell>{token.status}</TableCell>
+                  <TableCell>{token.successid}</TableCell>
+                  <TableCell>{token.semister}</TableCell>
+                  <TableCell>{token.department}</TableCell>
+                  <TableCell>{token.division}</TableCell>
+                  <TableCell>{token.email}</TableCell>
+                  <TableCell>{token.time}</TableCell>
+                 
                 </TableRow>
               ))}
             </TableBody>
