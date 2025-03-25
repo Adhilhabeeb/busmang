@@ -80,7 +80,7 @@ const [fetcheddta, setfetcheddta] = useState([])
       return;
     }
 
-    if(!formData.email.includes('.cse22@mbits.ac.in')){
+    if(!formData.email.includes('mbits.ac.in')){
 
       alert("plz enter your email with collage emzil format")
        return 

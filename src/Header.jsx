@@ -182,7 +182,7 @@ text=="Signin" ?   <Link to={text}>
           
             <Box sx={{ display:{xs:"none",sm:"none",md:"block"} }}>
 
-              {["Home", "About", "Contact", "BookTicket","Signin"].map(text=>(
+              {["Home", "About", "Contact", "BookTicket","Signin","MyTickets"].map(text=>(
 <>
 {text=="Home"?
        <Link to={"/"}>

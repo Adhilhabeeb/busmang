@@ -8,6 +8,8 @@ import {
   Divider,
   Button,
 } from "@mui/material";
+import dayjs from "dayjs";
+
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { QRCodeCanvas } from "qrcode.react"; // Correct import
@@ -15,8 +17,23 @@ import { QRCodeCanvas } from "qrcode.react"; // Correct import
 function Tokenshow() {
   const location = useLocation();
   const data = location.state;
+
   const cardRef = useRef(); // Reference for the token card
-console.log(data,"ddddddljhkjlhkjbefkjbhgt")
+//   console.log("Booking Date:", data.Bookingdate);
+//   console.log("Is Day.js Object:", dayjs.isDayjs(data.Bookingdate));
+//   console.log("Booking Date Type:", typeof data.Bookingdate);
+// console.log("Booking Date Value:", data.Bookingdate);
+
+
+
+
+
+
+{/* <Typography variant="subtitle1">
+  <strong>Selected Date:</strong> {formattedDate}
+</Typography> */}
+
+  
   if (!data) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
@@ -27,6 +44,10 @@ console.log(data,"ddddddljhkjlhkjbefkjbhgt")
     );
   }
 
+
+const bookingDate = dayjs(data.Bookingdate.$d || data.Bookingdate); // Ensure it's a true Day.js object
+const clonedDate = bookingDate.clone();
+console.log("Cloned Date:", bookingDate.format("YYYY-MM-DD"));
   // Convert data to a string for the QR code
   const qrData = JSON.stringify({
     name: data.name,
@@ -69,7 +90,17 @@ console.log(data,"ddddddljhkjlhkjbefkjbhgt")
             <Typography variant="subtitle1">
               <strong>To: {data.toLocation}  </strong>
             </Typography>
-           
+            <Typography variant="subtitle1">
+              <strong>Bus Name: {data.Busname}  </strong>
+            </Typography>
+            <Typography variant="subtitle1">
+              <strong>Sub Junction Name: {data.subjunction}  </strong>
+            </Typography>
+            <Typography variant="subtitle1">
+  <strong>Booked For  Date:</strong>  {bookingDate.format("YYYY-MM-DD")}
+</Typography>
+
+
             <Typography variant="subtitle1">
               <strong>Payment ID:</strong> {data.successid}
             </Typography>

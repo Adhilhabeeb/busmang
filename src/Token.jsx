@@ -6,6 +6,10 @@ import { addDoc, collection, serverTimestamp , query,
     limit, } from "firebase/firestore";
  
 import { ourcontext } from "./App";
+import dayjs from "dayjs";
+
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import {
   Card,
   CardContent,
@@ -41,7 +45,11 @@ function loadrazorpay(src) {
 function Token() {
   let navigate = useNavigate();
   let { user } = useContext(ourcontext);
+  const [selectredsubj, setselectredsubj] = useState("")
+  const [subjunctio, setsubjunctio] = useState(["plz select the  Route first"]);
+  const [Busname, setBusname] = useState(null)
   const [fromLocation, setFromLocation] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null);
   const [toLocation, setToLocation] = useState("");
   const [email, setEmail] = useState(user.email);
   const [semister, setsemister] = useState("")
@@ -79,7 +87,7 @@ const [fetcheddta, setfetcheddta] = useState([])
     "Trippunitara",
     "Aluva",
     "Panamkuzhy",
-    "Pattimattom",
+    
     "Adimaly",
     "Thodupuzha",
   ];
@@ -107,28 +115,74 @@ if (successid) {
         department,
         division,
         email,
-
+        subjunction:selectredsubj,  
+Bookingdate:selectedDate,Busname,
       time:` ${year}-${month}-${day} ${hours}:${minutes}:${seconds}
 
       `
     }
 
     adddatabase(valuespass)
-navigate("/tokenshow",{state:valuespass})
+// navigate("/tokenshow",{state:valuespass})
 }
   }, [successid])
   
-async function adddatabase(value) {
+// async function adddatabase(value) {
   
-    await addDoc(collection(db, "tokens"), {
-      ...value,
-       
-        createdAt: serverTimestamp(),
-    
-      });
 
+//   try {
+//     const docRef = await addDoc(collection(db, "tokenslist"), {
+//    name:value.name,
+//    fromLocation:value.fromLocation,
+//     toLocation:value.toLocation,
+//     status:value.status,
+//     successid:value.successid,
+//     semister:value.semister,
+//     department:value.department,
+//     division:value.division,
+//     email:value.email,
+//     subjunction:value.subjunction,
+//     Bookingdate:value.Bookingdate,
+//     Busname:value.Busname,
+//     time:value.time,
+
+//       createdAt: serverTimestamp(),
+//     });
+//     console.log("Document written with ID: ", docRef.id);
+//     navigate("/tokenshow",{state:value})
+//   } catch (e) {
+//     console.error("Error adding document: ", e);
+//   }
+
+
+
+
+// }
+
+async function adddatabase(value) {
+  try {
+    const docRef = await addDoc(collection(db, "tokenslist"), {
+      name: value.name,
+      fromLocation: value.fromLocation,
+      toLocation: value.toLocation,
+      status: value.status,
+      successid: value.successid,
+      semister: value.semister,
+      department: value.department,
+      division: value.division,
+      email: value.email,
+      subjunction: value.subjunction,
+      Bookingdate: value.Bookingdate ? dayjs(value.Bookingdate).format("YYYY-MM-DD") : null, // Convert to string
+      Busname: value.Busname,
+      time: value.time,
+      createdAt: serverTimestamp(),
+    });
+    console.log("Document written with ID: ", docRef.id);
+    navigate("/tokenshow", { state: value });
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
 }
-
 
   function checkTimePeriod(hour) {
     return hour >= 0 && hour < 12 ? "Morning" : "Evening";
@@ -158,9 +212,108 @@ async function adddatabase(value) {
    
   }, [status])
   
-
+useEffect(() => {
  
+  if(toLocation.trim()!="MBITS COLLEGE"  ||  fromLocation.trim()!="MBITS COLLEGE"){
+if (locationOptions.includes(toLocation) ) {
+ Subjunctionsfuncc(toLocation)
+
+  }
+  if (locationOptions.includes(fromLocation) ) {
+    Subjunctionsfuncc(fromLocation)
+   
+     }
+}
+
+}, [toLocation,fromLocation])
+
+ function Subjunctionsfuncc(mainplace) {
   
+switch (mainplace) {
+  case "Angamaly":
+    setsubjunctio([
+      "Angamaly",
+      "Kalady",
+      "Neeleeswaram Jn.",
+      "Kuruchilakode Jn."
+    ])
+    
+    break;
+case "Trippunitara":
+setsubjunctio([
+  "Tripunithura",
+  "Thiruvankulam",
+  "Puthenkurish",
+  "Kolenchery",
+  "Valakom",
+  "Muvattupuzha",
+  "Ambalappady",
+  "Kothamangalam"
+])
+break;
+case "Aluva":
+
+setsubjunctio( [
+  "Aluva",
+  "Rajagiri Hospital",
+  "Ponjassery",
+  "Vengola",
+  "Perumbavoor",
+  "Kuruppampady",
+  "Irumalappady"
+])
+  break ;
+case "Panamkuzhy":
+
+setsubjunctio([
+  "Panamkuzhy",
+  "Vengoor",
+  "Nedungapra church",
+  "Kottappady",
+  "Thrikkariyoor"
+])
+  break;
+case "Pattimattom":
+  break;
+case "Adimaly":
+
+
+setsubjunctio([
+  "1000 acre",
+  "Adimaly",
+  "Machiplavu",
+  "Irumpupalam",
+  "6th mile",
+  "Neriamangalam",
+  "Oonnukal"
+])
+  break;
+case "Thodupuzha":
+  setsubjunctio([
+    "Thodupuzha",
+    "Kodikulam West",
+    "Vannappuram",
+    "Kadavoor",
+    "Paingottoor",
+    "Pothanicad",
+    "Adivad"
+  ])
+  break;
+  
+  default:
+    break;
+}
+
+
+
+
+
+ }
+  
+ useEffect(() => {
+
+ }, [selectredsubj])
+ 
   useEffect(() => {
     if (!user) {
       navigate("/");
@@ -173,7 +326,7 @@ async function adddatabase(value) {
 
     seterror(false)
  
-  if (fromLocation.trim()==""||  toLocation.trim()=="" || name.trim()==""  ||  semister.trim()=="" || division.trim()=="" || department.trim()==""   ) {
+  if (fromLocation.trim()==""||  toLocation.trim()=="" || name.trim()==""  ||  semister.trim()=="" || division.trim()=="" || department.trim()=="" || !selectedDate || Busname.trim()=="" || selectredsubj.trim()=="")  {
    seterror(true)
    return 
   }
@@ -273,39 +426,33 @@ async function adddatabase(value) {
 
   {error && <p  style={{color:"red"}}>Invalid    data inputed    </p> }
 
-  <Select
-    labelId="demo-simple-select-label"
-    id="demo-simple-select"
-    value={status}
-    label="status"
-    onChange={(e)=>setStatus(e.target.value)}
-  >
-    <MenuItem value={"Morning"}>Morning</MenuItem>
-    <MenuItem value={"Evening"}>Evening</MenuItem>
-\
-  </Select>
+
 
 
           {status === "Morning" ? (
+             < Box textAlign={"start"}>
+              <InputLabel>Route mornibng</InputLabel>
             <Select fullWidth margin="normal" value={fromLocation} onChange={(e) => setFromLocation(e.target.value)}>
               {locationOptions.map((location, index) => (
                 <MenuItem key={index} value={location}>
                   {location}
                 </MenuItem>
               ))}
-            </Select>
+            </Select></Box>
           ) : (
             <TextField fullWidth margin="normal" label="From Location" variant="outlined" value={fromLocation} disabled />
           )}
 
           {status === "Evening" ? (
-            <Select fullWidth margin="normal" value={toLocation} onChange={(e) => setToLocation(e.target.value)}>
-              {locationOptions.map((location, index) => (
-                <MenuItem key={index} value={location}>
-                  {location}
-                </MenuItem>
-              ))}
-            </Select>
+               <Box textAlign={"start"}>
+               <InputLabel>Route</InputLabel>
+             <Select fullWidth margin="normal" value={toLocation} onChange={(e) => setToLocation(e.target.value)}>
+               {locationOptions.map((location, index) => (
+                 <MenuItem key={index} value={location}>
+                   {location}
+                 </MenuItem>
+               ))}
+             </Select></Box>
           ) : (
             <TextField fullWidth margin="normal" label="To Location" variant="outlined" value={toLocation} disabled />
           )}
@@ -316,7 +463,15 @@ async function adddatabase(value) {
           <TextField fullWidth margin="normal" label="Semester" variant="outlined" onChange={(e)=> setsemister(e.target.value)}  value={semister}  />
          
           <TextField fullWidth margin="normal" label="Division" variant="outlined" onChange={(e)=> setdivision(e.target.value)}  value={division}  />
-         
+          <InputLabel>Sub Junctions</InputLabel>
+    
+          <Select fullWidth margin="normal" value={selectredsubj} onChange={(e) => setselectredsubj(e.target.value)}>
+              {subjunctio.map((location, index) => (
+                <MenuItem key={index} value={location}>
+                  {location}
+                </MenuItem>
+              ))}
+            </Select>
           <InputLabel>Department</InputLabel>
          
                 <Select
@@ -332,6 +487,35 @@ async function adddatabase(value) {
              <MenuItem value="CE">CE</MenuItem>
              <MenuItem value="MECH">MECH</MenuItem>
            </Select>
+       {/* <input type="date" name="" id="" /> */}
+       <InputLabel  mt={1}>Bus Name</InputLabel>
+
+       <TextField sx={{mt:1.5}} fullWidth margin="normal" label="Bus Name" variant="outlined" onChange={(e)=> setBusname(e.target.value)}  value={Busname}  />
+         
+     <Box my={1}>
+     <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DatePicker 
+        label="Select Date For Booking"
+        value={selectedDate}
+        onChange={(newDate) => setSelectedDate(newDate)}
+        renderInput={(params) => <TextField {...params}     fullWidth />}
+      />
+    </LocalizationProvider>
+   <Box textAlign={"start"}>
+   <InputLabel  mt={1}>Time</InputLabel>
+    <Select  fullWidth
+    labelId="demo-simple-select-label"
+    id="demo-simple-select"
+    value={status}
+    label="status"
+    onChange={(e)=>setStatus(e.target.value)}
+  >
+    <MenuItem value={"Morning"}>Morning</MenuItem>
+    <MenuItem value={"Evening"}>Evening</MenuItem>
+
+  </Select>
+   </Box>
+     </Box>
           <Typography variant="h5" fontWeight="bold">Payment: ₹60</Typography>
           <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={Displayrazorpay}>
             Generate Token

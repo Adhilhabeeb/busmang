@@ -26,7 +26,7 @@ function handleregister(e) {
         return;
       }
 
-      if(!email.includes('.cse22@mbits.ac.in')){
+      if(!email.includes('@mbits.ac.in')){
 
         alert("plz enter your email with collage emzil format")
          return 
