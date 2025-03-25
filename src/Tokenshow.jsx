@@ -73,6 +73,8 @@ console.log("Cloned Date:", bookingDate.format("YYYY-MM-DD"));
 
   return (
     <>
+
+    
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh" bgcolor="#f5f5f5">
         <Card ref={cardRef} sx={{ width: 350, p: 2, textAlign: "center", boxShadow: 3 }}>
           <CardContent>

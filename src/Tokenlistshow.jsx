@@ -331,7 +331,7 @@ getmonthsorders(1)
               </TableRow>
             </TableHead>
             <TableBody>
-              {tokens.map((token) => (
+              { tokens.length>0 ? tokens.map((token) => (
                 <TableRow key={token.id}>
                   <TableCell>{token.name}</TableCell>
                   <TableCell>{token.fromLocation}</TableCell>
@@ -348,7 +348,9 @@ getmonthsorders(1)
                   <TableCell>{token.time}</TableCell>
                   
                 </TableRow>
-              ))}
+              )) :<Box display="flex" justifyContent="center" alignItems="center" height="50vh" width="100%" >
+                <Typography variant="h5" color="error" >No Data Available</Typography>  
+                </Box>}
             </TableBody>
           </Table>
         </TableContainer>
