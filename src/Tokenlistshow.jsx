@@ -35,9 +35,21 @@ function TokenListShow() {
 
       useEffect(() => {
         callfetch(age)
+     
       }, [age])
       
  const [searcheuser, setsearcheuser] = useState("")
+
+
+
+ useEffect(() => {
+  if (searcheuser.trim()=="") {
+
+    fetchTokens()
+    
+  }
+ }, [searcheuser])
+ 
   const [tokens, setTokens] = useState([]);
   const [loading, setLoading] = useState(true);
   const fetchTokens = async () => {
@@ -230,7 +242,7 @@ getmonthsorders(1)
     }));
 
     console.log(tokenList,"too")
-    let filt=tokenList.filter((item)=>item.email===searcheuser)
+    let filt=tokenList.filter((item)=>item.email===searcheuser.trim())
     console.log(filt,"filt")
     setTokens(filt);
   } catch (error) {
