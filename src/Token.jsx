@@ -117,7 +117,7 @@ if (successid) {
         semister,
         department,
         division,
-        email,
+        email,amount:payingamountr,
         subjunction:selectredsubj,  
 Bookingdate:selectedDate,Busname,
       time:` ${year}-${month}-${day} ${hours}:${minutes}:${seconds}

@@ -347,6 +347,8 @@ settotalamountbook(totalamouint)
                 <TableCell><b>From</b></TableCell>
                 <TableCell><b>To</b></TableCell>
                 <TableCell><b>Sub Junction</b></TableCell>
+                <TableCell><b>Amount</b></TableCell>
+
                 <TableCell><b>Booked for Date</b></TableCell>
                 <TableCell><b>Status</b></TableCell>
                 <TableCell><b>Success ID</b></TableCell>
@@ -361,13 +363,25 @@ settotalamountbook(totalamouint)
               </TableRow>
             </TableHead>
             <TableBody>
-              { tokens.length>0 ? tokens.map((token) => (
+              { tokens.length>0 ? tokens.map((token) =>
+            {  
+              let anmount=0
+              
+              busRoute.forEach((el)=>{
+                if (el.name==token.subjunction) {
+                
+                  anmount=el.price/(numdaysinmonth*numberofmoinths)/2
+                }
+                })
+              
+              return(
                 <TableRow key={token.id}>
                   <TableCell>{token.name}</TableCell>
                   <TableCell>{token.fromLocation}</TableCell>
                   
                   <TableCell>{token.toLocation}</TableCell>
                   <TableCell>{token.subjunction}</TableCell>
+                  <TableCell>{token.amount??anmount}</TableCell>
                   <TableCell>{token.Bookingdate}</TableCell>
                   <TableCell>{token.status}</TableCell>
                   <TableCell>{token.successid}</TableCell>
@@ -380,7 +394,13 @@ settotalamountbook(totalamouint)
                 </TableRow>
                 
                 
-              )) :<Box display="flex" justifyContent="center" alignItems="center" height="50vh" width="100%" >
+              )
+            
+            
+            
+            }
+              
+              ) :<Box display="flex" justifyContent="center" alignItems="center" height="50vh" width="100%" >
                 <Typography variant="h5" color="error" >No Data Available</Typography>  
                 </Box>}
             </TableBody>
