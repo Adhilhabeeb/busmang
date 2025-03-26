@@ -32,12 +32,45 @@ import { TextField } from "@mui/material";
 import { busRoute } from "./data";
 let numdaysinmonth=20
 let numberofmoinths=6
-
+const locationOptions = [
+  "Angamaly",
+  "Trippunitara",
+  "Aluva",
+  "Panamkuzhy",
+  
+  "Adimaly",
+  "Thodupuzha",
+];
 function TokenListShow() {
 
       let {user}=useContext(ourcontext)
+      const [Busname, setBusname] = useState("Angamaly")
       const [nodata, setnodata] = useState(false)
       const [age, setage] = useState("All")
+useEffect(() => {
+
+let amount=0
+
+let toike= tokens.filter((el)=>el.toLocation==Busname || el.fromLocation==Busname)
+
+setTokens(toike)
+  tokens.forEach(el=>{
+
+if (el.toLocation==Busname || el.fromLocation==Busname) {
+  console.log(el,"ojhjlkghjlghbljgbljgh")
+  busRoute.forEach((ele)=>{
+    if (ele.name==el.subjunction) {
+      amount+=ele.price/(numdaysinmonth*numberofmoinths)/2
+    }
+  }
+  )
+
+  
+}
+   
+  })
+  settotalamountbook(amount)
+}, [Busname])
 
       useEffect(() => {
         callfetch(age)
@@ -79,6 +112,25 @@ setshowtotalamou(false)
 
     fetchTokens();
   }, []);
+
+  useEffect(() => {
+  
+let amount=0
+    tokens.forEach((el)=>{
+
+      console.log(el,"el")
+
+      busRoute.forEach((ele)=>{
+        if (ele.name==el.subjunction) {
+          amount+=ele.price/(numdaysinmonth*numberofmoinths)/2
+        }
+      }
+      )
+    })
+    
+    settotalamountbook(amount)
+  }, [tokens])
+  
   async function getmonthsorders(months) {
     const today = new Date();
     const pastDate = new Date();
@@ -315,6 +367,22 @@ settotalamountbook(totalamouint)
           <MenuItem value={"Year"}> LastYear</MenuItem>
         </Select>
 </FormControl>
+
+<FormControl  sx={{ m: 5, minWidth: 150,width:"80%" }}>
+<Select  
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={Busname}
+          label="Busname"
+          onChange={e=>setBusname(e.target.value)}
+        >
+         {locationOptions.map((location, index) => (
+                        <MenuItem key={index} value={location}>
+                          {location}
+                        </MenuItem>
+                      ))}
+        </Select>
+</FormControl>
       </Stack>
   
    
@@ -404,7 +472,7 @@ settotalamountbook(totalamouint)
                 <Typography variant="h5" color="error" >No Data Available</Typography>  
                 </Box>}
             </TableBody>
-            { showtotalamou&& <Typography  mt={2} variant="h5" component={"p"}>Total Amount:{totalamountbook}</Typography>}
+            {  <Typography  mt={2} variant="h5" component={"p"}>Total Amount:{totalamountbook}</Typography>}
           </Table>
         </TableContainer>
         </>

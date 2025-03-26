@@ -13,7 +13,7 @@ function Loginpage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
+const [succesfull, setsuccesfull] = useState(false)
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -27,8 +27,13 @@ function Loginpage() {
 
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      setsuccesfull(true)
+      setTimeout(() => {
       setuser(userCredential.user);
-      navigate("/");
+
+        navigate("/");
+      }, 1500);
+     
     } catch (error) {
       setError("Invalid email or password. Please try again.");
     } finally {
@@ -43,8 +48,8 @@ function Loginpage() {
     try {
       const result = await signInWithPopup(auth, provider);
       if (result.user) {
-        setuser(result.user);
-        navigate("/");
+        // setuser(result.user);
+        // navigate("/");
       }
     } catch (error) {
       setError("Google sign-in failed. Please try again.");
@@ -54,63 +59,75 @@ function Loginpage() {
   };
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" bgcolor="#f5f5f5">
-      <Card sx={{ maxWidth: 400, p: 3, borderRadius: 2, boxShadow: 3 }}>
-        <Typography variant="h5" fontWeight="bold" textAlign="center" gutterBottom>
-          Login
-        </Typography>
+<>
 
-        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+{    succesfull&& <   Box   display={"flex"} justifyContent={"center"} alignItems={"center"} minHeight={"100vh"} position={"absolute"}  zIndex={999} width={"100%"} top={0}bgcolor={"#f5f5f5"}>
+  
+  { <Alert severity="success" sx={{ minWidth: 350, p: 3, borderRadius: 2, boxShadow: 3 }}>Login Succesfull</Alert>}
+</Box>}
 
-        <form onSubmit={handleLogin}>
-          <TextField
-            fullWidth
-            label="Email"
-            variant="outlined"
-            margin="normal"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <TextField
-            fullWidth
-            label="Password"
-            variant="outlined"
-            margin="normal"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+<Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" bgcolor="#f5f5f5">
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            sx={{ mt: 2 }}
-            disabled={loading}
-          >
-            {loading ? <CircularProgress size={24} /> : "Login"}
-          </Button>
+   
+<Card sx={{ maxWidth: 400, p: 3, borderRadius: 2, boxShadow: 3 }}>
+  <Typography variant="h5" fontWeight="bold" textAlign="center" gutterBottom>
+    Login
+  </Typography>
 
-          <Button
-            fullWidth
-            variant="contained"
-            startIcon={<GoogleIcon />}
-            sx={{ mt: 2, bgcolor: "red", ":hover": { bgcolor: "darkred" } }}
-            onClick={googleSignIn}
-            disabled={loading}
-          >
-            {loading ? <CircularProgress size={24} color="inherit" /> : "Sign in with Google"}
-          </Button>
+  {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
-          <Typography textAlign="center" sx={{ mt: 2 }}>
-            Don't have an account? <Link to="/signup" style={{ textDecoration: "none", color: "blue" }}>Sign Up</Link>
-          </Typography>
-        </form>
-      </Card>
-    </Box>
+  <form onSubmit={handleLogin}>
+    <TextField
+      fullWidth
+      label="Email"
+      variant="outlined"
+      margin="normal"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      required
+    />
+    <TextField
+      fullWidth
+      label="Password"
+      variant="outlined"
+      margin="normal"
+      type="password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      required
+    />
+
+    <Button
+      type="submit"
+      fullWidth
+      variant="contained"
+      color="primary"
+      sx={{ mt: 2 }}
+      disabled={loading}
+    >
+      {loading ? <CircularProgress size={24} /> : "Login"}
+    </Button>
+
+    <Button
+      fullWidth
+      variant="contained"
+      startIcon={<GoogleIcon />}
+      sx={{ mt: 2, bgcolor: "red", ":hover": { bgcolor: "darkred" } }}
+      onClick={googleSignIn}
+      disabled={loading}
+    >
+      {loading ? <CircularProgress size={24} color="inherit" /> : "Sign in with Google"}
+    </Button>
+
+    <Typography textAlign="center" sx={{ mt: 2 }}>
+      Don't have an account? <Link to="/signup" style={{ textDecoration: "none", color: "blue" }}>Sign Up</Link>
+    </Typography>
+  </form>
+</Card>
+</Box>
+</>
+
+
   );
 }
 

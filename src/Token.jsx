@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import { addDoc, collection, serverTimestamp , query,
     orderBy,
@@ -326,7 +326,7 @@ if (el.name==selectredsubj) {
 
   console.log(selectredsubj,"selectredsubj")
  }, [selectredsubj])
- 
+ let cardref=useRef()
   useEffect(() => {
     if (!user) {
       navigate("/");
@@ -425,8 +425,10 @@ if (el.name==selectredsubj) {
   return (
 
     <>
-  {   user ? <Box display="flex" justifyContent="center" alignItems="center" height="100vh" bgcolor="#f5f5f5">
-      <Card sx={{ width: 400, p: 2, textAlign: "center", boxShadow: 3 }}>
+  {   user ? <Box display="flex" justifyContent="center" alignItems="center" height={  "100vh"} boxSizing={"content-box"} padding={20} bgcolor="red">
+      
+      
+      <Card ref={cardref} sx={{ width: 500, p: 2, textAlign: "center", boxShadow: 3,marginTop:10 }}>
         <CardContent>
           <Typography variant="h5" fontWeight="bold">
             Token Page
@@ -444,7 +446,7 @@ if (el.name==selectredsubj) {
 
           {status === "Morning" ? (
              < Box textAlign={"start"}>
-              <InputLabel>Route mornibng</InputLabel>
+              <InputLabel>Route </InputLabel>
             <Select fullWidth margin="normal" value={fromLocation} onChange={(e) => setFromLocation(e.target.value)}>
               {locationOptions.map((location, index) => (
                 <MenuItem key={index} value={location}>
@@ -476,15 +478,35 @@ if (el.name==selectredsubj) {
           <TextField fullWidth margin="normal" label="Semester" variant="outlined" onChange={(e)=> setsemister(e.target.value)}  value={semister}  />
          
           <TextField fullWidth margin="normal" label="Division" variant="outlined" onChange={(e)=> setdivision(e.target.value)}  value={division}  />
+         
+          <Box textAlign={"start"}>
+   <InputLabel  mt={1}>Time</InputLabel>
+    <Select  fullWidth
+    labelId="demo-simple-select-label"
+    id="demo-simple-select"
+    value={status}
+    label="status"
+    onChange={(e)=>setStatus(e.target.value)}
+  >
+    <MenuItem value={"Morning"}>Morning</MenuItem>
+    <MenuItem value={"Evening"}>Evening</MenuItem>
+
+  </Select>
+   </Box>
+          <Box textAlign={"start"}>
           <InputLabel>Sub Junctions</InputLabel>
     
-          <Select fullWidth margin="normal" value={selectredsubj} onChange={(e) => setselectredsubj(e.target.value)}>
-              {subjunctio.map((location, index) => (
-                <MenuItem key={index} value={location}>
-                  {location}
-                </MenuItem>
-              ))}
-            </Select>
+    <Select fullWidth margin="normal" value={selectredsubj} onChange={(e) => setselectredsubj(e.target.value)}>
+        {subjunctio.map((location, index) => (
+          <MenuItem key={index} value={location}>
+            {`${location} (${status})`}
+          </MenuItem>
+        ))}
+      </Select>
+
+            </Box>
+            
+            <Box textAlign={"start"}>
           <InputLabel>Department</InputLabel>
          
                 <Select
@@ -500,35 +522,33 @@ if (el.name==selectredsubj) {
              <MenuItem value="CE">CE</MenuItem>
              <MenuItem value="MECH">MECH</MenuItem>
            </Select>
+           </Box>
        {/* <input type="date" name="" id="" /> */}
-       <InputLabel  mt={1}>Bus Name</InputLabel>
+    
+       <Box textAlign={"start"}>
+     
 
        <TextField sx={{mt:1.5}} fullWidth margin="normal" label="Bus Name" variant="outlined" onChange={(e)=> setBusname(e.target.value)}  value={Busname}  />
-         
-     <Box my={1}>
+         </Box>
+     <Box my={1} textAlign={"start"} >
+    
+  
+
      <LocalizationProvider dateAdapter={AdapterDayjs}>
+    
       <DatePicker 
         label="Select Date For Booking"
         value={selectedDate}
+      
         onChange={(newDate) => setSelectedDate(newDate)}
-        renderInput={(params) => <TextField {...params}     fullWidth />}
+        // renderInput={(params) => <TextField {...params}      fullWidth />}
+        slotProps={{ textField: { fullWidth: true } }}
       />
+     
     </LocalizationProvider>
-   <Box textAlign={"start"}>
-   <InputLabel  mt={1}>Time</InputLabel>
-    <Select  fullWidth
-    labelId="demo-simple-select-label"
-    id="demo-simple-select"
-    value={status}
-    label="status"
-    onChange={(e)=>setStatus(e.target.value)}
-  >
-    <MenuItem value={"Morning"}>Morning</MenuItem>
-    <MenuItem value={"Evening"}>Evening</MenuItem>
-
-  </Select>
-   </Box>
+  
      </Box>
+
           <Typography variant="h5" fontWeight="bold">Payment: ₹{payingamountr}</Typography>
           <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={Displayrazorpay}>
             Generate Token
