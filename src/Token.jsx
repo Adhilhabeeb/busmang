@@ -23,6 +23,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import Loginpage from "./Login";
 import { db } from "./Firebase";
+import { busRoute } from "./data";
 
 const now = new Date();
 let currentHour = now.getHours();
@@ -49,6 +50,8 @@ function Token() {
   const [subjunctio, setsubjunctio] = useState(["plz select the  Route first"]);
   const [Busname, setBusname] = useState(null)
   const [fromLocation, setFromLocation] = useState("");
+ const [payingamountr, setpayingamountr] = useState(60)
+  
   const [selectedDate, setSelectedDate] = useState(null);
   const [toLocation, setToLocation] = useState("");
   const [email, setEmail] = useState(user.email);
@@ -312,6 +315,16 @@ case "Thodupuzha":
   
  useEffect(() => {
 
+busRoute.forEach((el)=>{
+if (el.name==selectredsubj) {
+ setpayingamountr(el.price/120/2)
+  
+}
+
+
+})
+
+  console.log(selectredsubj,"selectredsubj")
  }, [selectredsubj])
  
   useEffect(() => {
@@ -352,7 +365,7 @@ case "Thodupuzha":
     let data = await fetch("https://busmang.onrender.com/razorpay", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: 60 }),
+      body: JSON.stringify({ amount: payingamountr }),
     }).then((t) => t.json());
   
     // const options = {
@@ -516,7 +529,7 @@ case "Thodupuzha":
   </Select>
    </Box>
      </Box>
-          <Typography variant="h5" fontWeight="bold">Payment: ₹60</Typography>
+          <Typography variant="h5" fontWeight="bold">Payment: ₹{payingamountr}</Typography>
           <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={Displayrazorpay}>
             Generate Token
           </Button>
