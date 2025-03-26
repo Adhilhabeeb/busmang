@@ -98,11 +98,15 @@ setshowtotalamou(false)
   const [loading, setLoading] = useState(true);
   const fetchTokens = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, "tokenslist"));
+      const querySnapshot = await getDocs(
+        query(collection(db, "tokenslist"), orderBy("createdAt", "desc")) // "desc" for newest first, use "asc" for oldest first
+      );
       const tokenList = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
+      // Fetch ordered data
+
 
       console.log(tokenList,"too")
       setfirstdatatokens(tokenList)
@@ -419,6 +423,9 @@ settotalamountbook(totalamouint)
     <TableRow>
       <TableCell><b>Name</b></TableCell>
       <TableCell><b>Sub Junction</b></TableCell>
+      <TableCell><b>From Location</b></TableCell>
+      <TableCell><b>To Location</b></TableCell>
+
       <TableCell><b>Status</b></TableCell>
       <TableCell><b>Maid ID</b></TableCell>
       <TableCell><b>Booked for Date</b></TableCell>
@@ -441,6 +448,8 @@ settotalamountbook(totalamouint)
         <TableRow key={token.id}>
           <TableCell>{token.name}</TableCell>
           <TableCell>{token.subjunction}</TableCell>
+          <TableCell>{token.fromLocation}</TableCell>
+          <TableCell>{token.toLocation}</TableCell>
           <TableCell>{token.status}</TableCell>
           <TableCell>{token.email}</TableCell> 
           <TableCell>{token.Bookingdate}</TableCell>

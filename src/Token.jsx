@@ -359,6 +359,8 @@ if (el.name==selectredsubj) {
     if (!res) {
       alert("Razorpay SDK failed to load. Are you online?");
       return;
+    }else{
+     
     }
     
   
@@ -368,6 +370,10 @@ if (el.name==selectredsubj) {
       body: JSON.stringify({ amount: payingamountr }),
     }).then((t) => t.json());
   
+if (!data) {
+  console.log("no dat")
+}
+    console.log(data," 978586r864864684866848686")
     // const options = {
     //   key: "rzp_test_aGs9hkOcUXTL4t",
     //   amount: data.amount.toString(),
@@ -425,10 +431,10 @@ if (el.name==selectredsubj) {
   return (
 
     <>
-  {   user ? <Box display="flex" justifyContent="center" alignItems="center" height={  "80vh"} boxSizing={"content-box"} padding={20} >
+  {   user ? <Box display="flex" justifyContent="center" alignItems="center"  boxSizing={"content-box"} padding={10} >
       
       
-      <Card ref={cardref} sx={{ width: 500, p: 2, textAlign: "center", boxShadow: 3,marginTop:10 }}>
+      <Card ref={cardref} sx={{ width: 500, p: 2, textAlign: "center", boxShadow: 3,marginTop:"10vh" }}>
         <CardContent>
           <Typography variant="h5" fontWeight="bold">
             Token Page
