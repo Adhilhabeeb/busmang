@@ -42,7 +42,7 @@ const locationOptions = [
   "Thodupuzha",
 ];
 function TokenListShow() {
-
+const [firstdatatokens, setfirstdatatokens] = useState([])
       let {user}=useContext(ourcontext)
       const [Busname, setBusname] = useState("Angamaly")
       const [nodata, setnodata] = useState(false)
@@ -51,9 +51,14 @@ useEffect(() => {
 
 let amount=0
 
-let toike= tokens.filter((el)=>el.toLocation==Busname || el.fromLocation==Busname)
+let toike= firstdatatokens.filter((el)=>el.toLocation==Busname || el.fromLocation==Busname)
 
+
+console.log("fiinjgkkhg",toike)
 setTokens(toike)
+
+
+
   tokens.forEach(el=>{
 
 if (el.toLocation==Busname || el.fromLocation==Busname) {
@@ -100,6 +105,7 @@ setshowtotalamou(false)
       }));
 
       console.log(tokenList,"too")
+      setfirstdatatokens(tokenList)
       setTokens(tokenList);
     } catch (error) {
       console.error("Error fetching tokens:", error);
