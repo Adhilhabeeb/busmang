@@ -48,8 +48,8 @@ const [succesfull, setsuccesfull] = useState(false)
     try {
       const result = await signInWithPopup(auth, provider);
       if (result.user) {
-        // setuser(result.user);
-        // navigate("/");
+        setuser(result.user);
+        navigate("/");
       }
     } catch (error) {
       setError("Google sign-in failed. Please try again.");

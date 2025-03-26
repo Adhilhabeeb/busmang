@@ -425,7 +425,7 @@ if (el.name==selectredsubj) {
   return (
 
     <>
-  {   user ? <Box display="flex" justifyContent="center" alignItems="center" height={  "100vh"} boxSizing={"content-box"} padding={20} bgcolor="red">
+  {   user ? <Box display="flex" justifyContent="center" alignItems="center" height={  "80vh"} boxSizing={"content-box"} padding={20} >
       
       
       <Card ref={cardref} sx={{ width: 500, p: 2, textAlign: "center", boxShadow: 3,marginTop:10 }}>
