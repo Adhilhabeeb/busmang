@@ -414,72 +414,50 @@ settotalamountbook(totalamouint)
       ) : (
 
         <>  <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell><b>Name</b></TableCell>
-                <TableCell><b>From</b></TableCell>
-                <TableCell><b>To</b></TableCell>
-                <TableCell><b>Sub Junction</b></TableCell>
-                <TableCell><b>Amount</b></TableCell>
+        <Table>
+  <TableHead>
+    <TableRow>
+      <TableCell><b>Name</b></TableCell>
+      <TableCell><b>Sub Junction</b></TableCell>
+      <TableCell><b>Status</b></TableCell>
+      <TableCell><b>Maid ID</b></TableCell>
+      <TableCell><b>Booked for Date</b></TableCell>
+      <TableCell><b>Amount</b></TableCell>
+      <TableCell><b>Transaction ID</b></TableCell>
+      <TableCell><b>Transaction Time</b></TableCell>
+    </TableRow>
+  </TableHead>
+  <TableBody>
+    {tokens.length > 0 ? tokens.map((token) => {  
+      let anmount = 0;
+      
+      busRoute.forEach((el) => {
+        if (el.name === token.subjunction) {
+          anmount = el.price / (numdaysinmonth * numberofmoinths) / 2;
+        }
+      });
 
-                <TableCell><b>Booked for Date</b></TableCell>
-                <TableCell><b>Status</b></TableCell>
-                <TableCell><b>Success ID</b></TableCell>
-                <TableCell><b>Semester</b></TableCell>
-                <TableCell><b>Department</b></TableCell>
-                <TableCell><b>Division</b></TableCell>
-                <TableCell><b>Email</b></TableCell>
-               
-                <TableCell><b>Time</b></TableCell>
-              
+      return (
+        <TableRow key={token.id}>
+          <TableCell>{token.name}</TableCell>
+          <TableCell>{token.subjunction}</TableCell>
+          <TableCell>{token.status}</TableCell>
+          <TableCell>{token.email}</TableCell> 
+          <TableCell>{token.Bookingdate}</TableCell>
+          <TableCell>{token.amount ?? anmount}</TableCell>
+          <TableCell>{token.successid}</TableCell>  
+          <TableCell>{token.time}</TableCell>  
+        </TableRow>
+      );
+    }) : (
+      <Box display="flex" justifyContent="center" alignItems="center" height="50vh" width="100%">
+        <Typography variant="h5" color="error">No Data Available</Typography>  
+      </Box>
+    )}
+  </TableBody>
+  <Typography mt={2} variant="h5" component={"p"}>Total Amount: {totalamountbook}</Typography>
+</Table>
 
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              { tokens.length>0 ? tokens.map((token) =>
-            {  
-              let anmount=0
-              
-              busRoute.forEach((el)=>{
-                if (el.name==token.subjunction) {
-                
-                  anmount=el.price/(numdaysinmonth*numberofmoinths)/2
-                }
-                })
-              
-              return(
-                <TableRow key={token.id}>
-                  <TableCell>{token.name}</TableCell>
-                  <TableCell>{token.fromLocation}</TableCell>
-                  
-                  <TableCell>{token.toLocation}</TableCell>
-                  <TableCell>{token.subjunction}</TableCell>
-                  <TableCell>{token.amount??anmount}</TableCell>
-                  <TableCell>{token.Bookingdate}</TableCell>
-                  <TableCell>{token.status}</TableCell>
-                  <TableCell>{token.successid}</TableCell>
-                  <TableCell>{token.semister}</TableCell>
-                  <TableCell>{token.department}</TableCell>
-                  <TableCell>{token.division}</TableCell>
-                  <TableCell>{token.email}</TableCell>
-                  <TableCell>{token.time}</TableCell>
-                  
-                </TableRow>
-                
-                
-              )
-            
-            
-            
-            }
-              
-              ) :<Box display="flex" justifyContent="center" alignItems="center" height="50vh" width="100%" >
-                <Typography variant="h5" color="error" >No Data Available</Typography>  
-                </Box>}
-            </TableBody>
-            {  <Typography  mt={2} variant="h5" component={"p"}>Total Amount:{totalamountbook}</Typography>}
-          </Table>
         </TableContainer>
         </>
       
