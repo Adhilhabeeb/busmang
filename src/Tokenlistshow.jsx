@@ -427,7 +427,7 @@ settotalamountbook(totalamouint)
       <TableCell><b>To Location</b></TableCell>
 
       <TableCell><b>Status</b></TableCell>
-      <TableCell><b>Maid ID</b></TableCell>
+      <TableCell><b>Mail ID</b></TableCell>
       <TableCell><b>Booked for Date</b></TableCell>
       <TableCell><b>Amount</b></TableCell>
       <TableCell><b>Transaction ID</b></TableCell>
