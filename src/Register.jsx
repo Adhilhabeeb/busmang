@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { TextField, Button, Container, Typography, Box } from "@mui/material";
+import { TextField, Button, Container, Typography, Box, Alert } from "@mui/material";
 import { Google as GoogleIcon } from "@mui/icons-material";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
@@ -12,6 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Register = () => {
     let navigate=useNavigate()
     const {user,setuser} = useContext(ourcontext);
+    const [succesfull, setsuccesfull] = useState(false)
     
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,8 +40,15 @@ function handleregister(e) {
         const user = userCredential.user;
         console.log(user,"uuuu")
 
+
+
+        setsuccesfull(true)
+
+        setTimeout(() => {
      navigate("/Signin")
-        // ...
+          
+        }, 2000);
+   
       })
       .catch((error) => {
 
@@ -60,8 +68,15 @@ function handleregister(e) {
     
         const result = await signInWithPopup (auth, provider);
         console.log("User Info:", result.user);
-        setuser( result.user)
+       
+        setsuccesfull(true)
 
+
+        setTimeout(() => {
+          setuser( result.user)
+          navigate("/Signin")
+        
+             }, 2000);
 
       } catch (error) {
         console.error("Error signing in:", error);
@@ -69,7 +84,18 @@ function handleregister(e) {
   };
 
   return (
-    <Container maxWidth="xs">
+    
+    
+    <>
+
+    {    succesfull&& <   Box   display={"flex"} justifyContent={"center"} alignItems={"center"} minHeight={"100vh"} position={"absolute"}  zIndex={999} width={"100%"} top={0}bgcolor={"#f5f5f5"}>
+      
+      { 
+        
+        <Alert severity="success" sx={{ minWidth: 350, p: 3, borderRadius: 2, boxShadow: 3 }}>Registered Succesfully</Alert>}
+    </Box>}
+    
+      <Container maxWidth="xs">
       <Box
         sx={{
           display: "flex",
@@ -144,6 +170,9 @@ function handleregister(e) {
           </Typography>
       </Box>
     </Container>
+    </>
+    
+  
   );
 };
 
